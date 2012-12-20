@@ -14,7 +14,7 @@
  *  limitations under the License. 
  */
 
-package com.justinschultz.websocket;
+package com.leacox.websocket;
 
 public interface WebSocket {
 	public void setEventHandler(WebSocketEventHandler eventHandler);

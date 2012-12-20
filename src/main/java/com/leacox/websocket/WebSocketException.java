@@ -1,12 +1,6 @@
-package com.justinschultz.pusherclient;
-
-/*	
- *  Copyright (C) 2012 Justin Schultz
- *  JavaPusherClient, a Pusher (http://pusherapp.com) client for Java
+/*
+ *  Copyright (C) 2011 Roderick Baier
  *  
- *  http://justinschultz.com/
- *  http://publicstaticdroidmain.com/
- * 
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -20,8 +14,23 @@ package com.justinschultz.pusherclient;
  *  limitations under the License. 
  */
 
-public interface PusherListener {
-	public void onConnect(String socketId);
-	public void onMessage(String message);
-	public void onDisconnect();
+package com.leacox.websocket;
+
+
+public class WebSocketException
+		extends Exception
+{
+	private static final long serialVersionUID = 1L;
+
+
+	public WebSocketException(String message)
+	{
+		super(message);
+	}
+	
+	
+	public WebSocketException(String message, Throwable t)
+	{
+		super(message, t);
+	}
 }

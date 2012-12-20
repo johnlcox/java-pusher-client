@@ -1,4 +1,4 @@
-package com.justinschultz.pusherclient;
+package com.leacox.pusherclient;
 
 /*	
  *  Copyright (C) 2012 Justin Schultz
@@ -20,6 +20,8 @@ package com.justinschultz.pusherclient;
  *  limitations under the License. 
  */
 
-public interface ChannelListener {
+public interface PusherListener {
+	public void onConnect(String socketId);
 	public void onMessage(String message);
+	public void onDisconnect();
 }

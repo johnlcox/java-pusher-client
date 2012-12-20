@@ -14,23 +14,33 @@
  *  limitations under the License. 
  */
 
-package com.justinschultz.websocket;
+package com.leacox.websocket;
+
+import java.io.UnsupportedEncodingException;
 
 
-public class WebSocketException
-		extends Exception
+public class WebSocketMessage
 {
-	private static final long serialVersionUID = 1L;
+	private Byte[] message;
 
 
-	public WebSocketException(String message)
+	public WebSocketMessage(final Byte[] message)
 	{
-		super(message);
+		this.message = message;
 	}
-	
-	
-	public WebSocketException(String message, Throwable t)
+
+
+	public String getText()
 	{
-		super(message, t);
+		byte[] message = new byte[this.message.length];
+		for (int i = 0; i < this.message.length; i++) {
+			message[i] = this.message[i];
+		}
+		try {
+			return new String(message, "UTF-8");
+		}
+		catch (UnsupportedEncodingException uee) {
+			return null;
+		}
 	}
 }

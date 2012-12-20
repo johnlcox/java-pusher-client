@@ -1,4 +1,4 @@
-package com.justinschultz.examples;
+package com.leacox.pusher.examples;
 
 /*	
  *  Copyright (C) 2012 Justin Schultz
@@ -22,10 +22,10 @@ package com.justinschultz.examples;
 
 import org.json.JSONObject;
 
-import com.justinschultz.pusherclient.ChannelListener;
-import com.justinschultz.pusherclient.PusherClient;
-import com.justinschultz.pusherclient.PusherClient.Channel;
-import com.justinschultz.pusherclient.PusherListener;
+import com.leacox.pusherclient.ChannelListener;
+import com.leacox.pusherclient.PusherClient;
+import com.leacox.pusherclient.PusherListener;
+import com.leacox.pusherclient.PusherClient.Channel;
 
 public class PusherTest {
 	private static final String PUSHER_API_KEY = "80bbbe17a2e65338705a";

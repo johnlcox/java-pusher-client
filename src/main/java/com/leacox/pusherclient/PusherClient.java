@@ -1,4 +1,4 @@
-package com.justinschultz.pusherclient;
+package com.leacox.pusherclient;
 
 /*	
  *  Copyright (C) 2012 Justin Schultz
@@ -29,11 +29,11 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.justinschultz.websocket.WebSocket;
-import com.justinschultz.websocket.WebSocketConnection;
-import com.justinschultz.websocket.WebSocketEventHandler;
-import com.justinschultz.websocket.WebSocketException;
-import com.justinschultz.websocket.WebSocketMessage;
+import com.leacox.websocket.WebSocket;
+import com.leacox.websocket.WebSocketConnection;
+import com.leacox.websocket.WebSocketEventHandler;
+import com.leacox.websocket.WebSocketException;
+import com.leacox.websocket.WebSocketMessage;
 
 public class PusherClient {
 	private static final Logger logger = LoggerFactory.getLogger(PusherClient.class);
