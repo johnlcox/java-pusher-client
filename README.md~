@@ -55,4 +55,4 @@
 		}  
 	});  
 ## Credits
-java-pusher-client uses the [weberknecht] (https://github.com/rbaier/weberknecht) Java WebSockets library by Roderick Baier.
+JavaPusherClient uses the [weberknecht] (https://github.com/rbaier/weberknecht) Java WebSockets library by Roderick Baier.
