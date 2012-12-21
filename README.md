@@ -55,5 +55,5 @@
 		}  
 	});  
 ## Credits
-java-pusher-client uses the [weberknecht] (https://github.com/rbaier/weberknecht) Java WebSockets library by Roderick Baier.
+java-pusher-client uses the [weberknecht] (https://github.com/rbaier/weberknecht) Java WebSockets library by Roderick Baier.  
 java-pusher-client is largely based on the [JavaPusherClient] (https://github.com/jmschultz/JavaPusherClient) library by Justin Schultz.  Project and packages renamed for mavenization.
