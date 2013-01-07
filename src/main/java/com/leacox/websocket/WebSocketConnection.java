@@ -29,7 +29,12 @@ import java.util.HashMap;
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLSocketFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class WebSocketConnection implements WebSocket {
+	private static final Logger logger = LoggerFactory.getLogger(WebSocketConnection.class);
+
 	private URI url = null;
 	private WebSocketEventHandler eventHandler = null;
 
@@ -46,20 +51,22 @@ public class WebSocketConnection implements WebSocket {
 		this(url, null);
 	}
 
-	public WebSocketConnection(URI url, String protocol)
-			throws WebSocketException {
+	public WebSocketConnection(URI url, String protocol) throws WebSocketException {
 		this.url = url;
 		handshake = new WebSocketHandshake(url, protocol);
 	}
 
+	@Override
 	public void setEventHandler(WebSocketEventHandler eventHandler) {
 		this.eventHandler = eventHandler;
 	}
 
+	@Override
 	public WebSocketEventHandler getEventHandler() {
 		return this.eventHandler;
 	}
 
+	@Override
 	public void connect() throws WebSocketException {
 		try {
 			if (connected) {
@@ -121,19 +128,16 @@ public class WebSocketConnection implements WebSocket {
 			connected = true;
 			eventHandler.onOpen();
 		} catch (WebSocketException wse) {
-			wse.printStackTrace();
 			throw wse;
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			throw new WebSocketException("error while connecting: "
-					+ ioe.getMessage(), ioe);
+			throw new WebSocketException("error while connecting: " + ioe.getMessage(), ioe);
 		}
 	}
 
+	@Override
 	public synchronized void send(String data) throws WebSocketException {
 		if (!connected) {
-			throw new WebSocketException(
-					"error while sending text data: not connected");
+			throw new WebSocketException("error while sending text data: not connected");
 		}
 
 		try {
@@ -141,11 +145,8 @@ public class WebSocketConnection implements WebSocket {
 			output.write(data.getBytes(("UTF-8")));
 			output.write(0xff);
 		} catch (UnsupportedEncodingException uee) {
-			uee.printStackTrace();
-			throw new WebSocketException(
-					"error while sending text data: unsupported encoding", uee);
+			throw new WebSocketException("error while sending text data: unsupported encoding", uee);
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
 			throw new WebSocketException("error while sending text data", ioe);
 		}
 	}
@@ -175,10 +176,11 @@ public class WebSocketConnection implements WebSocket {
 				close();
 			}
 		} catch (WebSocketException wse) {
-			wse.printStackTrace();
+			logger.error("Failed handling reciever error: ", wse);
 		}
 	}
 
+	@Override
 	public synchronized void close() throws WebSocketException {
 		if (!connected) {
 			return;
@@ -197,17 +199,14 @@ public class WebSocketConnection implements WebSocket {
 
 	private synchronized void sendCloseHandshake() throws WebSocketException {
 		if (!connected) {
-			throw new WebSocketException(
-					"error while sending close handshake: not connected");
+			throw new WebSocketException("error while sending close handshake: not connected");
 		}
 
 		try {
 			output.write(0xff00);
 			output.write("\r\n".getBytes());
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			throw new WebSocketException("error while sending close handshake",
-					ioe);
+			throw new WebSocketException("error while sending close handshake", ioe);
 		}
 
 		connected = false;
@@ -229,12 +228,9 @@ public class WebSocketConnection implements WebSocket {
 				socket.setKeepAlive(true);
 				socket.setSoTimeout(0);
 			} catch (UnknownHostException uhe) {
-				uhe.printStackTrace();
 				throw new WebSocketException("unknown host: " + host, uhe);
 			} catch (IOException ioe) {
-				ioe.printStackTrace();
-				throw new WebSocketException("error while creating socket to "
-						+ url, ioe);
+				throw new WebSocketException("error while creating socket to " + url, ioe);
 			}
 		} else if (scheme != null && scheme.equals("wss")) {
 			if (port == -1) {
@@ -244,12 +240,9 @@ public class WebSocketConnection implements WebSocket {
 				SocketFactory factory = SSLSocketFactory.getDefault();
 				socket = factory.createSocket(host, port);
 			} catch (UnknownHostException uhe) {
-				uhe.printStackTrace();
 				throw new WebSocketException("unknown host: " + host, uhe);
 			} catch (IOException ioe) {
-				ioe.printStackTrace();
-				throw new WebSocketException(
-						"error while creating secure socket to " + url, ioe);
+				throw new WebSocketException("error while creating secure socket to " + url, ioe);
 			}
 		} else {
 			throw new WebSocketException("unsupported protocol: " + scheme);
@@ -264,12 +257,11 @@ public class WebSocketConnection implements WebSocket {
 			output.close();
 			socket.close();
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			throw new WebSocketException(
-					"error while closing websocket connection: ", ioe);
+			throw new WebSocketException("error while closing websocket connection: ", ioe);
 		}
 	}
 
+	@Override
 	public boolean isConnected() {
 		return connected;
 	}
